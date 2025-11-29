@@ -1,185 +1,361 @@
-// src/App.jsx
+import { useState } from "react";
+
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white text-black">
       {/* NAVBAR */}
-      <header className="border-b border-neutral-200 bg-black text-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-black/95 text-white backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-red-600" />
-            <span className="text-lg font-semibold tracking-[0.2em]">
-              LÍNEA ROJA
-            </span>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-600 text-xs font-bold tracking-[0.2em]">
+              LR
+            </div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm font-semibold tracking-[0.18em]">
+                LÍNEA ROJA
+              </span>
+              <span className="text-[10px] uppercase text-neutral-400">
+                Evacuación · Konrad Lorenz
+              </span>
+            </div>
           </div>
-          <nav className="hidden gap-6 text-sm font-medium md:flex">
+
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-6 text-xs font-medium uppercase tracking-[0.18em] md:flex">
             <a href="#problema" className="hover:text-red-500">
               Problema
             </a>
             <a href="#restricciones" className="hover:text-red-500">
               Restricciones
             </a>
+            <a href="#empatia" className="hover:text-red-500">
+              Empatía
+            </a>
             <a href="#solucion" className="hover:text-red-500">
-              Solución
+              Propuesta
             </a>
             <a href="#validacion" className="hover:text-red-500">
               Validación
             </a>
+            <a href="#conclusiones" className="hover:text-red-500">
+              Conclusiones
+            </a>
           </nav>
-         
+
+          {/* CTA Desktop */}
+    
+
+          {/* Mobile button */}
+          <button
+            className="inline-flex items-center justify-center rounded-full border border-neutral-700 p-2 md:hidden"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Abrir menú"
+          >
+            <span className="sr-only">Abrir menú</span>
+            <div className="flex flex-col gap-1">
+              <span className="block h-[2px] w-4 bg-white" />
+              <span className="block h-[2px] w-4 bg-white" />
+              <span className="block h-[2px] w-4 bg-white" />
+            </div>
+          </button>
         </div>
+
+        {/* Mobile nav panel */}
+        {menuOpen && (
+          <div className="border-t border-neutral-800 bg-black md:hidden">
+            <nav className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-xs font-medium uppercase tracking-[0.18em] sm:px-6">
+              {[
+                ["Problema", "#problema"],
+                ["Restricciones", "#restricciones"],
+                ["Empatía", "#empatia"],
+                ["Ideación", "#ideacion"],
+                ["Propuesta", "#solucion"],
+                ["Validación", "#validacion"],
+                ["Conclusiones", "#conclusiones"],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="py-1 text-neutral-200 hover:text-red-500"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {label}
+                </a>
+              ))}
+     
+            </nav>
+          </div>
+        )}
       </header>
 
-      {/* HERO: VIDEO + TEXTO */}
+      {/* HERO: VIDEO + RESUMEN */}
       <section className="bg-black text-white">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-16 md:grid-cols-2 md:items-center">
-          {/* Texto */}
-          <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-500">
-              Proyecto Línea Roja · Evacuación Konrad Lorenz
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:px-8 lg:py-16">
+          {/* En mobile el video va primero */}
+          <div className="order-1 lg:order-none">
+            <div className="relative">
+              <div className="aspect-video overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-xl">
+                <iframe
+                  className="h-full w-full"
+                  src="https://www.youtube.com/embed/ZQglx_6JLt4?si=UEWHe16CkbwzCT3Q"
+                  title="Proyecto Línea Roja – Evacuación"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="pointer-events-none absolute -left-3 -top-3 h-10 w-10 border-2 border-red-600 sm:-left-4 sm:-top-4 sm:h-16 sm:w-16" />
+              <div className="pointer-events-none absolute -bottom-3 -right-3 hidden h-10 w-10 border border-neutral-700 sm:block" />
+            </div>
+          </div>
+
+          <div className="space-y-4 sm:space-y-5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-red-500 sm:text-xs">
+              Proyecto de innovación · Gestión del riesgo
             </p>
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Hacer visible la ruta que puede salvar vidas.
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+              Línea Roja: hacer visible el camino que reduce el riesgo en
+              emergencias.
             </h1>
-            <p className="text-sm text-neutral-300 sm:text-base">
-              En una emergencia cada segundo cuenta. Aunque las rutas de
-              evacuación existen, la comunidad universitaria no las reconoce,
-              no las sigue y muchas veces no sabe cómo actuar ni cómo apoyar a
-              personas con movilidad reducida.
+            <p className="text-sm text-neutral-300 sm:text-[15px]">
+              En la Universidad Konrad Lorenz las rutas de evacuación están
+              señalizadas, pero la comunidad rara vez las mira o recuerda.
+              Durante un sismo o incendio, muchas personas no saben hacia dónde
+              desplazarse ni cómo ayudar a quienes tienen movilidad reducida.
             </p>
-            <p className="text-sm text-neutral-300 sm:text-base">
-              <span className="font-semibold text-red-500">
-                Línea Roja
-              </span>{" "}
-              transforma la señalización en una guía clara, visible y
-              recordable, apoyada por herramientas prácticas para brigadistas y
-              un manual sencillo de entender.
+            <p className="text-sm text-neutral-300 sm:text-[15px]">
+              <span className="font-semibold text-red-500">Línea Roja</span> es
+              una propuesta integral que combina una guía visual continua, un
+              kit de apoyo para brigadistas y un manual sencillo para traducir
+              el protocolo de evacuación en acciones claras y practicables.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 pt-1">
               <a
                 href="#solucion"
-                className="rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide hover:bg-red-700"
+                className="rounded-full bg-red-600 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] hover:bg-red-700 sm:text-sm"
               >
-                Ver la solución
+                Ver propuesta completa
               </a>
               <a
                 href="#problema"
-                className="rounded-full border border-neutral-600 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide hover:border-red-500"
+                className="rounded-full border border-neutral-600 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] hover:border-red-500 sm:text-sm"
               >
                 Entender el problema
               </a>
             </div>
           </div>
-
-          {/* Video */}
-          <div className="relative">
-            <div className="aspect-video overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-xl">
-              <iframe
-                className="h-full w-full"
-                src="https://www.youtube.com/embed/ZQglx_6JLt4?si=UEWHe16CkbwzCT3Q"
-                title="Proyecto Línea Roja – Evacuación"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="pointer-events-none absolute -left-4 -top-4 h-16 w-16 border-2 border-red-600" />
-            <div className="pointer-events-none absolute -bottom-4 -right-4 h-10 w-10 border border-neutral-700" />
-          </div>
         </div>
       </section>
 
-      {/* PROBLEMA INICIAL */}
+      {/* PROBLEMA ORIGINAL + REPLANTEAMIENTO */}
       <section
         id="problema"
-        className="border-b border-neutral-200 bg-white py-16"
+        className="border-b border-neutral-200 bg-white py-10 sm:py-14"
       >
-        <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 md:flex-row">
-          <div className="md:w-1/3">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">
-              01 · Problema
+        <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:gap-12 lg:px-8">
+          <div className="lg:w-1/3">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+              01 · Problema de evacuación
             </h2>
-            <p className="mt-3 text-2xl font-semibold">
-              La señalización existe. La cultura de evacuación, no.
+            <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+              La señalización existe, pero no se transforma en acción.
             </p>
           </div>
-          <div className="space-y-4 text-sm leading-relaxed text-neutral-800 md:w-2/3">
+          <div className="space-y-4 text-sm leading-relaxed text-neutral-800 sm:text-[15px] lg:w-2/3">
             <p>
-              En la Universidad Konrad Lorenz, estudiantes, docentes y
-              administrativos conviven con planos y avisos de evacuación que
-              casi nadie mira. En un sismo, incendio u otra emergencia, la
-              mayoría no sabe dónde están las rutas, hacia dónde dirigirse ni
-              cómo ayudar a quienes tienen movilidad reducida.
+              A partir de la definición clásica de ruta de evacuación,
+              identificamos que en la Konrad Lorenz ocurre un fenómeno
+              recurrente: los planos y avisos están presentes, pero la mayoría
+              de estudiantes, docentes y administrativos no los reconoce ni los
+              usa en situaciones reales de emergencia.
             </p>
             <p>
-              El problema no es solo de infraestructura o de carteles en la
-              pared: es una desconexión entre la teoría del protocolo y la
-              práctica real. La señalización no genera recordación ni sentido
-              de urgencia, por lo que las personas improvisan en medio del
-              miedo y el caos.
+              El análisis del problema inicial mostró causas de fondo: poco
+              conocimiento de las rutas, comprensión limitada del protocolo,
+              escasa capacitación práctica y ausencia de apoyos visibles que
+              orienten en tiempo real bajo presión.
             </p>
             <p className="border-l-4 border-red-600 pl-4 text-neutral-900">
-              <span className="font-semibold">Reto:</span> convertir las rutas
-              de evacuación en una guía intuitiva, visible y accionable, que
-              realmente funcione bajo presión.
+              Esto nos llevó a replantear el problema como una{" "}
+              <span className="font-semibold">
+                brecha entre el protocolo formal y la experiencia real de
+                evacuación
+              </span>
+              , más que como un simple asunto de cartelería o infraestructura.
             </p>
           </div>
         </div>
       </section>
 
-      {/* RESTRICCIONES */}
+      {/* RESTRICCIONES + CUESTIONAMIENTOS */}
       <section
         id="restricciones"
-        className="border-b border-neutral-200 bg-neutral-50 py-16"
+        className="border-b border-neutral-200 bg-neutral-50 py-10 sm:py-14"
       >
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">
-            02 · Restricciones y contexto
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+            02 · Restricciones y preguntas clave
           </h2>
-          <p className="mt-3 text-2xl font-semibold text-neutral-900">
-            Soluciones reales para un campus real.
+          <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+            Soluciones posibles dentro de un campus con límites reales.
           </p>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-neutral-200 bg-white p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-700">
-                Limitaciones económicas
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-800">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                Restricciones económicas
               </h3>
-              <p className="mt-3 text-sm text-neutral-700">
+              <p className="mt-3">
                 No es viable transformar toda la infraestructura ni construir
-                rampas en cada punto del campus. Se requiere intervenir con
-                soluciones de alto impacto y bajo costo.
+                rampas en todos los puntos. Las intervenciones deben ser{" "}
+                <span className="font-semibold">
+                  de bajo costo y alto impacto
+                </span>{" "}
+                aprovechando lo que ya existe.
               </p>
             </div>
-            <div className="rounded-xl border border-neutral-200 bg-white p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-700">
-                Infraestructura y accesibilidad
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-800">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                Accesibilidad limitada
               </h3>
-              <p className="mt-3 text-sm text-neutral-700">
-                La accesibilidad para personas con discapacidad es limitada,
-                por lo que se necesitan apoyos claros, roles definidos y rutas
-                comprensibles para todos.
+              <p className="mt-3">
+                La infraestructura no garantiza accesibilidad plena para
+                personas con discapacidad, lo que exige{" "}
+                <span className="font-semibold">
+                  apoyos claros y roles definidos
+                </span>{" "}
+                para asistirlas durante la evacuación.
               </p>
             </div>
-            <div className="rounded-xl border border-neutral-200 bg-white p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-700">
-                Desinterés y baja retención
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-800">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                Cultura de prevención
               </h3>
-              <p className="mt-3 text-sm text-neutral-700">
-                Los simulacros se viven como un trámite. La información no se
-                recuerda y la presencia del grupo de reacción es poco visible.
+              <p className="mt-3">
+                El interés por los simulacros y la retención de información es
+                bajo. La presencia del grupo de reacción es poco visible, por lo
+                que el protocolo{" "}
+                <span className="font-semibold">no se vuelve memoria</span>{" "}
+                cotidiana.
               </p>
             </div>
           </div>
 
-          <p className="mt-8 max-w-3xl text-sm text-neutral-800">
-            A pesar de estas restricciones, la universidad sí cuenta con
-            presupuesto para prevención de desastres y con el apoyo cercano del
-            Cuerpo de Bomberos de Chapinero. El reto está en{" "}
+          <p className="mt-8 max-w-3xl text-sm text-neutral-800 sm:text-[15px]">
+            El análisis de{" "}
+            <span className="font-semibold">cuestionamientos y suposiciones</span>{" "}
+            mostró que la universidad sí cuenta con presupuesto para prevención
+            y con el apoyo cercano del Cuerpo de Bomberos de Chapinero. El reto
+            no es solo de recursos, sino de{" "}
             <span className="font-semibold text-red-600">
-              gestionar mejor los recursos
+              gestión inteligente y visibilización
             </span>{" "}
-            y reforzar procesos ya existentes.
+            de los procesos existentes.
+          </p>
+        </div>
+      </section>
+
+      {/* MAPA DE EMPATÍA */}
+      <section
+        id="empatia"
+        className="border-b border-neutral-200 bg-white py-10 sm:py-14"
+      >
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+            03 · Mapa de empatía
+          </h2>
+          <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+            Diseñar desde lo que una persona vive en medio de la evacuación.
+          </p>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-900">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                ¿Qué piensa, siente, ve y oye?
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm">
+                <li>• Confusión, ansiedad y miedo frente a qué hacer.</li>
+                <li>• Ve pasillos congestionados y señales poco visibles.</li>
+                <li>• Oye alarmas, ruido y mensajes que no siempre son claros.</li>
+              </ul>
+            </div>
+            <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-900">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                ¿Qué dice, hace y necesita?
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm">
+                <li>• Pregunta “¿por dónde salgo?” o “¿qué pasó?”.</li>
+                <li>• Busca compañía y referencias visibles para seguir.</li>
+                <li>
+                  • Espera sentirse segura, identificar rutas y reconocer quién
+                  la puede guiar.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p className="mt-6 max-w-3xl text-sm text-neutral-800 sm:text-[15px]">
+            Los <span className="font-semibold">pains</span> más fuertes son
+            actuar bajo presión y no distinguir a los brigadistas; los{" "}
+            <span className="font-semibold">gains</span> deseados son seguridad,
+            orientación y claridad. Estos elementos guiaron las decisiones de
+            diseño de Línea Roja.
+          </p>
+        </div>
+      </section>
+
+      {/* IDEACIÓN */}
+      <section
+        id="ideacion"
+        className="border-b border-neutral-200 bg-neutral-50 py-10 sm:py-14"
+      >
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+            04 · Ideación y creatividad
+          </h2>
+          <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+            De palabras aleatorias a soluciones aplicables en el campus.
+          </p>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-800">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                “Nube”
+              </h3>
+              <p className="mt-3">
+                Inspiró ideas vinculadas a visibilidad, humo y clima: se
+                exploraron recursos que hicieran la{" "}
+                <span className="font-semibold">
+                  señalización más intuitiva
+                </span>{" "}
+                y reconocible en condiciones adversas.
+              </p>
+            </div>
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-800">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-700">
+                “Violín”
+              </h3>
+              <p className="mt-3">
+                Aportó nociones de ritmo, orden y cuerdas guía, dando lugar a
+                la idea de{" "}
+                <span className="font-semibold">
+                  bastones lumínicos y roles marcados
+                </span>{" "}
+                para los brigadistas.
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-6 max-w-3xl text-sm text-neutral-800 sm:text-[15px]">
+            Estos ejercicios permitieron salir de lo obvio y llegar a una
+            solución que sigue siendo creativa, pero{" "}
+            <span className="font-semibold text-red-600">
+              viable y aplicable
+            </span>{" "}
+            a la realidad de la universidad.
           </p>
         </div>
       </section>
@@ -187,99 +363,72 @@ function App() {
       {/* SOLUCIÓN: LÍNEA ROJA, KIT, MANUAL */}
       <section
         id="solucion"
-        className="border-b border-neutral-200 bg-white py-16"
+        className="border-b border-neutral-200 bg-white py-10 sm:py-14"
       >
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">
-            03 · Solución: Proyecto Línea Roja
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+            05 · Propuesta integral Línea Roja
           </h2>
-          <p className="mt-3 text-2xl font-semibold text-neutral-900">
-            De un plano en la pared a una experiencia guiada en tiempo real.
+          <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+            Tres componentes coordinados para acompañar la evacuación.
           </p>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {/* Línea Roja */}
-            <div className="flex flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-5">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600">
-                a · Línea Roja reflectiva
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {/* Línea Roja Reflectiva */}
+            <div className="flex flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-900">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-red-600">
+                5.1 · Línea Roja reflectiva
               </span>
-              <p className="mt-3 text-sm text-neutral-900">
-                Una línea roja continua en techos o paredes que guía
-                visualmente hacia las salidas de emergencia, incluso con humo
-                o poca luz.
+              <p className="mt-3">
+                Una línea roja instalada en techos o paredes que crea un{" "}
+                <span className="font-semibold">camino continuo</span> hacia las
+                salidas de emergencia, visible incluso con humo o baja luz.
               </p>
-              <ul className="mt-3 space-y-1 text-xs text-neutral-700">
-                <li>• Visibilidad en pasillos congestionados.</li>
-                <li>• Camino único y reconocible bajo presión.</li>
-                <li>• Refuerzo constante: ves la ruta todos los días.</li>
+              <ul className="mt-3 space-y-1 text-xs text-neutral-800">
+                <li>• Rutas unificadas y fáciles de seguir.</li>
+                <li>• Refuerza la memoria al verse a diario.</li>
+                <li>• Reduce dudas en momentos críticos.</li>
               </ul>
             </div>
 
-            {/* Kit de emergencia */}
-            <div className="flex flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-5">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600">
-                b · Kit para brigadistas
+            {/* Kit para Brigadistas */}
+            <div className="flex flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-900">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-red-600">
+                5.2 · Kit de emergencia
               </span>
-              <p className="mt-3 text-sm text-neutral-900">
-                Un kit que permite a los brigadistas hacerse visibles y
-                conducir la evacuación con orden y autoridad.
+              <p className="mt-3">
+                Un kit portátil que reúne implementos esenciales (linterna,
+                cuerdas, botiquín básico, elementos impermeables, silbato y
+                medios de comunicación) para{" "}
+                <span className="font-semibold">
+                  apoyar y orientar a la comunidad
+                </span>{" "}
+                durante la evacuación.
               </p>
-              <ul className="mt-3 space-y-1 text-xs text-neutral-700">
-                <li>• Bastón lumínico para marcar la ruta.</li>
-                <li>• Bocina de gas para dar instrucciones claras.</li>
-                <li>• Fichas para calificar zonas y priorizar la evacuación.</li>
+              <ul className="mt-3 space-y-1 text-xs text-neutral-800">
+                <li>• Mejora la capacidad de respuesta.</li>
+                <li>• Refuerza la autoridad del brigadista.</li>
+                <li>• Aumenta la percepción de acompañamiento.</li>
               </ul>
             </div>
 
             {/* Manual de evacuación */}
-            <div className="flex flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-5">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600">
-                c · Manual de evacuación
+            <div className="flex flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-900">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-red-600">
+                5.3 · Manual de evacuación
               </span>
-              <p className="mt-3 text-sm text-neutral-900">
-                Una guía práctica y sencilla que explica qué hacer, qué evitar
-                y cómo seguir la Línea Roja antes, durante y después de la
-                emergencia.
+              <p className="mt-3">
+                Un manual ilustrado que explica de forma sencilla qué hacer,
+                qué evitar, cómo seguir la Línea Roja y cómo{" "}
+                <span className="font-semibold">
+                  asistir a personas con movilidad reducida
+                </span>
+                .
               </p>
-              <ul className="mt-3 space-y-1 text-xs text-neutral-700">
-                <li>• Roles claros para la comunidad.</li>
-                <li>• Instrucciones para asistir a personas con movilidad reducida.</li>
-                <li>• Refuerzo de memoria mediante pasos clave.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* EMPATÍA + EXPERIENCIA */}
-      <section className="border-b border-neutral-200 bg-neutral-50 py-16">
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">
-            04 · Personas en emergencia
-          </h2>
-          <p className="mt-3 text-2xl font-semibold text-neutral-900">
-            Diseñado desde lo que la gente piensa, siente y hace.
-          </p>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <div className="rounded-xl border border-neutral-200 bg-white p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-700">
-                Dolor (pains)
-              </h3>
-              <ul className="mt-3 space-y-2 text-sm text-neutral-800">
-                <li>• Confusión, miedo e incertidumbre frente a qué hacer.</li>
-                <li>• No reconocer a los brigadistas ni las rutas.</li>
-                <li>• Caos en los pasillos y aglomeraciones.</li>
-              </ul>
-            </div>
-            <div className="rounded-xl border border-neutral-200 bg-white p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-700">
-                Ganancia (gains)
-              </h3>
-              <ul className="mt-3 space-y-2 text-sm text-neutral-800">
-                <li>• Sentirse seguros y acompañados.</li>
-                <li>• Identificar rápidamente la ruta a seguir.</li>
-                <li>• Ver claramente quién guía y da instrucciones.</li>
+              <ul className="mt-3 space-y-1 text-xs text-neutral-800">
+                <li>• Refuerza el protocolo antes de la emergencia.</li>
+                <li>• Clarifica roles y responsabilidades.</li>
+                <li>• Facilita la apropiación del proceso de evacuación.</li>
               </ul>
             </div>
           </div>
@@ -289,55 +438,112 @@ function App() {
       {/* VALIDACIÓN */}
       <section
         id="validacion"
-        className="border-b border-neutral-200 bg-white py-16"
+        className="border-b border-neutral-200 bg-neutral-50 py-10 sm:py-14"
       >
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">
-            05 · Validación con la comunidad
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+            06 · Encuestas y resultados
           </h2>
-          <p className="mt-3 text-2xl font-semibold text-neutral-900">
-            Probado con estudiantes, docentes y administrativos.
+          <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+            La comunidad validó la claridad y utilidad de la propuesta.
           </p>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-5">
-              <p className="text-3xl font-bold text-red-600">✔</p>
-              <p className="mt-3 text-sm text-neutral-800">
-                La Línea Roja fue percibida como{" "}
-                <span className="font-semibold">clara y fácil de seguir</span>
-                , incluso en escenarios de estrés.
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-900">
+              <p className="text-3xl font-bold text-red-600">✓</p>
+              <p className="mt-3">
+                La mayoría de participantes percibió la{" "}
+                <span className="font-semibold">Línea Roja</span> como un
+                recurso claro y sencillo de seguir durante la evacuación.
               </p>
             </div>
-            <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-5">
-              <p className="text-3xl font-bold text-red-600">✔</p>
-              <p className="mt-3 text-sm text-neutral-800">
-                El kit para brigadistas se reconoció como{" "}
-                <span className="font-semibold">
-                  útil para mantener el control
-                </span>{" "}
-                durante la evacuación.
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-900">
+              <p className="text-3xl font-bold text-red-600">✓</p>
+              <p className="mt-3">
+                El <span className="font-semibold">kit</span> fue valorado como
+                una herramienta útil y reconocible para apoyar a brigadistas y
+                comunidad en momentos de crisis.
               </p>
             </div>
-            <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-5">
-              <p className="text-3xl font-bold text-red-600">✔</p>
-              <p className="mt-3 text-sm text-neutral-800">
-                El manual fue valorado como una{" "}
-                <span className="font-semibold">
-                  herramienta clave para entender el protocolo
-                </span>{" "}
-                antes de la emergencia.
+            <div className="rounded-xl border border-neutral-200 bg-white p-5 text-sm text-neutral-900">
+              <p className="text-3xl font-bold text-red-600">✓</p>
+              <p className="mt-3">
+                El <span className="font-semibold">manual</span> se reconoció
+                como clave para comprender los pasos del protocolo y reducir la
+                improvisación.
               </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* NOMBRE DEL GRUPO + CONCLUSIONES */}
+      <section
+        id="conclusiones"
+        className="border-b border-neutral-200 bg-white py-10 sm:py-14"
+      >
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-10">
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+              07 · Nombre y significado
+            </h2>
+            <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+              “Línea Roja”: una guía directa, simple y decisiva.
+            </p>
+            <p className="mt-3 max-w-3xl text-sm text-neutral-800 sm:text-[15px]">
+              El nombre del grupo simboliza una línea que conecta a las
+              personas con la salida más segura en el momento crítico. Es una
+              metáfora de{" "}
+              <span className="font-semibold">
+                decisión, urgencia y protección
+              </span>{" "}
+              frente al riesgo.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-red-600 sm:text-sm">
+              08 · Conclusiones del proyecto
+            </h2>
+            <p className="mt-3 text-xl font-semibold text-neutral-900 sm:text-2xl">
+              Seguridad desde la creatividad, la empatía y la gestión de
+              recursos.
+            </p>
+            <p className="mt-3 max-w-3xl text-sm text-neutral-800 sm:text-[15px]">
+              Línea Roja se consolida como una solución innovadora y accesible
+              para fortalecer los protocolos de evacuación en la Universidad
+              Konrad Lorenz. La combinación de señalización visual clara,
+              acompañamiento humano y herramientas prácticas{" "}
+              <span className="font-semibold">
+                mejora la eficacia y la confianza
+              </span>{" "}
+              en los procesos de salida del campus.
+            </p>
+            <p className="mt-3 max-w-3xl text-sm text-neutral-800 sm:text-[15px]">
+              Más allá del producto, el proyecto permitió comprender mejor el
+              comportamiento humano bajo estrés, potenciar la cultura de la
+              prevención y demostrar que la{" "}
+              <span className="font-semibold text-red-600">
+                gestión inteligente de recursos existentes
+              </span>{" "}
+              puede transformar la manera en que vivimos las emergencias.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      
+
       {/* FOOTER */}
-      <footer className="border-t border-neutral-800 bg-black py-6 text-xs text-neutral-400">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-4 md:flex-row">
-          <p>© {new Date().getFullYear()} Proyecto Línea Roja. Todos los derechos reservados.</p>
-          <p className="text-[11px]">
-            Diseñado para la Universidad Konrad Lorenz · Evacuación y gestión del riesgo.
+      <footer className="border-t border-neutral-800 bg-black py-5 text-[11px] text-neutral-400">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-2 px-4 sm:flex-row sm:px-6 lg:px-8">
+          <p>
+            © {new Date().getFullYear()} Proyecto Línea Roja · Fundación
+            Universitaria Konrad Lorenz.
+          </p>
+          <p className="text-[10px]">
+            Integrantes: Jairo Perilla, Jorge Triana, Martín Aldana, Natalia
+            Correa, Valentina Peña, Sebastián Vargas.
           </p>
         </div>
       </footer>
